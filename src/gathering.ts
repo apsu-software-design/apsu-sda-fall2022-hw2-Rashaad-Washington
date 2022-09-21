@@ -1,27 +1,42 @@
 import { Member } from "./member";
 
-export class Gathering{
+export class Gathering {
+    private name: string;
+    private date: string; //there is no LocalTime object in TypeScript
+    private members: Member[];
+    private location: string;
 
-    //Added this constructor because in the assignment you say the gathering
-    //must have a name, time, and zero or more members.
-    //Name is referenced as title, and time is referenced as date. This is 
-    //done because your function calls the class with these parameters.
-    public title : string;
-    private date : string; //there is no LocalTime object in TypeScript
-    private members : Member[];
-    private location : string;
-    constructor(title: string, location: string, date: string, members? : Member){
-        this.title = title;
+    constructor(name: string, location: string, date: string,) {
+        this.name = name;
         this.location = location;
         this.date = date;
-        if (members){
-            this.members.push(members);
+        this.members = [];
+    }
+
+    public modify(title: string, newDate?: string) {
+        if (newDate) {
+            this.date = newDate;
         }
+        this.name = title;
     }
 
-    getMembers (sds : string) : Member[]{
-        return this.members;
+    public getGatheringName(): string {
+        return this.name;
     }
 
+    public getMembers(): string[] {
+        var members: string[];
+        for (let each of this.members) {
+            members.push(each.getMemberName());
+        }
+        return members;
+    }
 
+    public addMember(member: string) {
+        this.members.forEach((indexMember) => {
+            if (indexMember.getMemberName() == member) {
+                this.members.push(indexMember);
+            }
+        })
+    }
 }

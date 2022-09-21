@@ -1,34 +1,57 @@
-import {Gathering} from './gathering';
+import { Gathering } from './gathering';
 
-export class Gatherings{
-    private gatherings : Gathering[];
+export class Gatherings {
+    private gatherings: Gathering[];
 
-    constructor(){
+    constructor() {
         this.gatherings = [];
     }
-    
-    public getGatherings(){
 
+    public getGatherings(): Gathering[] {
+        return this.gatherings;
     }
 
-    public addGathering(title: string, location: string, date: string){
-        this.gatherings.push(new Gathering(title, location, date))
+    public addGathering(title: string, location: string, date: string) {
+        this.gatherings.push(new Gathering(title, location, date));
     }
 
-    public getMembers(gatheringTitle: string){
-        var gathering = this.gatherings.find(gathering => gathering.title == gatheringTitle);
+    public modifyGathering(title: string, newTitle: string, newDate?: string) {
+        this.gatherings.forEach((gathering) => {
+            if (gathering.getGatheringName() == title) {
+                if (newDate) {
+                    gathering.modify(newTitle, newDate);
+                } else {
+                    gathering.modify(newTitle);
+                }
+            }
+        });
     }
 
-    public modifyGathering(title: string, newTitle: string, newDate?: string){
-
+    public getMembers(gatheringTitle: string): string[] {
+        var members: string[];
+        this.gatherings.forEach((gathering) => {
+            if (gathering.getGatheringName() == gatheringTitle) {
+                members = gathering.getMembers();
+            }
+        });
+        return members;
     }
 
-    addMemberToGathering(name: string, gatheringTitle: string) {
-
+    public addMemberToGathering(member: string, gatheringTitle: string) {
+        this.gatherings.forEach((gathering) => {
+            if (gathering.getGatheringName() == gatheringTitle) {
+                gathering.addMember(member);
+            }
+        });
     }
 
-    findGatheringNames(query: string): string[] {
-
-        return ;
+    public findGatheringNames(query: string): string[] {
+        var gatherings: string[];
+        this.gatherings.forEach((gathering) => {
+            if (gathering.getGatheringName() == query) {
+                gatherings.push(gathering.getGatheringName());
+            }
+        });
+        return gatherings;
     }
 }

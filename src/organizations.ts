@@ -1,16 +1,35 @@
-import {Organization} from './organization';
+import { Organization } from './organization';
 
-export class Organizations{
-    private organizations : Organization[];
+export class Organizations {
+    private organizations: Organization[];
 
-    constructor(){
+    constructor() {
         this.organizations = [];
     }
 
-    addGatheringToOrganization(gatheringTitle: string, organizationTitle: string) {
+    public getOrganizations(): Organization[] {
+        return this.organizations;
     }
 
-    findOrganizationNames(query: string): string[] {
-        return ;
+    public addOrganization(title: string) {
+        this.organizations.push(new Organization(title));
+    }
+
+    public addGatheringToOrganization(gatheringTitle: string, organizationTitle: string) {
+        this.organizations.forEach((organization) => {
+            if (organization.getOrganizationName() == organizationTitle) {
+                organization.addGathering(gatheringTitle);
+            }
+        });
+    }
+
+    public findOrganizationNames(query: string): string[] {
+        var organizations: string[];
+        this.organizations.forEach((organization) => {
+            if (organization.getOrganizationName() == query) {
+                organizations.push(organization.getOrganizationName());
+            }
+        });
+        return organizations;
     }
 }

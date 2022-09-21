@@ -1,20 +1,32 @@
-import {Member} from './member';
-export class Members{
-    private members : Member[];
+import { Member } from './member';
+export class Members {
+    private members: Member[];
 
-    constructor(){
+    constructor() {
         this.members = [];
     }
 
-    public getMembers(){
-
+    public getMember(name: string): Member {
+        var member: Member;
+        this.members.forEach((member) => {
+            if (member.getMemberName() == name) {
+                return member;
+            }
+        });
+        return;
     }
 
-    findGatheringNames(query: string): string[] { 
-        return ;
+    public findMemberNames(query: string): string[] {
+        var members: string[];
+        this.members.forEach((member) => {
+            if (member.getMemberName() == query) {
+                members.push(member.getMemberName());
+            }
+        });
+        return members;
     }
 
-    addMember(name: string, email: string) {
-        return ;
+    public addMember(name: string, email: string) {
+        this.members.push(new Member(name, email));
     }
 }
